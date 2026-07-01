@@ -1,4 +1,4 @@
-import { getClients, getFactures, ajouterFacture } from '../librairies/actions'
+import { getClients, getFactures, ajouterFacture } from '../../librairies/actions'
 import Link from 'next/link'
 
 export default async function PageFactures() {
