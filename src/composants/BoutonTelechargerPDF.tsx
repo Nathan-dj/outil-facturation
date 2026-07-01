@@ -21,7 +21,7 @@ export default function BoutonTelechargerPDF({ facture }: FactureProps) {
     // 2. En-tête de la facture
     doc.setFontSize(22)
     doc.setTextColor(29, 78, 216) // Bleu Tailwind (blue-700)
-    doc.text('FREEMAKERS CONSULTING', 20, 20)
+    doc.text('FACTURE', 20, 20)
     
     doc.setFontSize(16)
     doc.setTextColor(0, 0, 0)
