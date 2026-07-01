@@ -1,5 +1,8 @@
-import { getClients, getFactures, ajouterFacture } from '../../librairies/actions'
+import { getClients, getFactures } from '../../librairies/actions'
 import Link from 'next/link'
+import BoutonTelechargerPDF from '../../composants/BoutonTelechargerPDF'
+import FormulaireFacture from '../../composants/FormulaireFacture'
+import SelecteurStatut from '../../composants/SelecteurStatut'
 
 export default async function PageFactures() {
   const clients = await getClients()
@@ -15,43 +18,12 @@ export default async function PageFactures() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Formulaire de création de facture */}
         <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 lg:col-span-1">
           <h2 className="text-xl font-semibold mb-4">Nouvelle Facture</h2>
-          <form action={ajouterFacture} className="flex flex-col gap-4">
-            <select 
-              name="clientId" required
-              className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Sélectionner un client...</option>
-              {clients.map(client => (
-                <option key={client.id} value={client.id}>{client.nom}</option>
-              ))}
-            </select>
-            
-            <input 
-              type="number" step="0.01" name="montant" placeholder="Montant (€)" required 
-              className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-            />
-            
-            <div className="flex flex-col">
-              <label className="text-sm text-gray-600 mb-1">Date d'échéance</label>
-              <input 
-                type="date" name="dateEcheance" required 
-                className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-              />
-            </div>
-
-            <button 
-              type="submit" 
-              className="bg-green-600 text-white font-medium p-2 rounded-lg hover:bg-green-700 transition mt-2"
-            >
-              Créer la facture
-            </button>
-          </form>
+          {/* On utilise notre nouveau composant sécurisé */}
+          <FormulaireFacture clients={clients} />
         </section>
 
-        {/* Liste des factures */}
         <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 lg:col-span-2">
           <h2 className="text-xl font-semibold mb-4">Historique des Factures</h2>
           {factures.length === 0 ? (
@@ -65,6 +37,7 @@ export default async function PageFactures() {
                     <th className="pb-3 text-gray-600">Client</th>
                     <th className="pb-3 text-gray-600">Montant</th>
                     <th className="pb-3 text-gray-600">Statut</th>
+                    <th className="pb-3 text-gray-600">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -74,9 +47,11 @@ export default async function PageFactures() {
                       <td className="py-3">{facture.client.nom}</td>
                       <td className="py-3 font-bold">{facture.montant} €</td>
                       <td className="py-3">
-                        <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">
-                          {facture.statut}
-                        </span>
+                        {/* On utilise notre nouveau composant interactif */}
+                        <SelecteurStatut id={facture.id} statutActuel={facture.statut} />
+                      </td>
+                      <td className="py-3">
+                        <BoutonTelechargerPDF facture={facture} />
                       </td>
                     </tr>
                   ))}

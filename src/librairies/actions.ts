@@ -52,3 +52,13 @@ export async function ajouterFacture(formData: FormData) {
 
   revalidatePath('/factures')
 }
+
+export async function modifierStatutFacture(id: string, nouveauStatut: string) {
+  await prisma.facture.update({
+    where: { id: id },
+    data: { statut: nouveauStatut }
+  })
+  
+  // Rafraîchit la page pour afficher le nouveau statut
+  revalidatePath('/factures')
+}
