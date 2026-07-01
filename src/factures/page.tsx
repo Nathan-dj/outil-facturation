@@ -9,11 +9,6 @@ export default async function PageFactures() {
     <main className="min-h-screen p-8 bg-gray-100 text-gray-900">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-blue-700">Gestion des Factures</h1>
-        <div className="mb-8">
-            <Link href="/factures" className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
-                Gérer les factures &rarr;
-            </Link>
-        </div>
         <Link href="/" className="text-blue-600 hover:underline">
           Retour aux clients
         </Link>
