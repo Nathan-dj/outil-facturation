@@ -24,3 +24,31 @@ export async function ajouterClient(formData: FormData) {
   // Rafraîchit la page d'accueil pour afficher le nouveau client
   revalidatePath('/')
 }
+
+export async function getFactures() {
+  // Récupère les factures en incluant les informations du client associé
+  return await prisma.facture.findMany({
+    include: { client: true },
+    orderBy: { dateCreation: 'desc' }
+  })
+}
+
+export async function ajouterFacture(formData: FormData) {
+  const clientId = formData.get('clientId') as string
+  const montant = parseFloat(formData.get('montant') as string)
+  const dateEcheance = new Date(formData.get('dateEcheance') as string)
+  
+  // Génération d'un numéro de facture aléatoire
+  const numeroFacture = `FACT-${Math.floor(Math.random() * 10000)}`
+
+  await prisma.facture.create({
+    data: {
+      numeroFacture,
+      montant,
+      dateEcheance,
+      clientId
+    }
+  })
+
+  revalidatePath('/factures')
+}
