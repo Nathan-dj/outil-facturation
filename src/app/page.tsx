@@ -1,5 +1,6 @@
 import { getClients, ajouterClient } from '../librairies/actions'
 import Link from 'next/link'
+import FormulaireClient from '../composants/FormulaireClient'
 
 export default async function Accueil() {
   // On récupère la liste des clients directement depuis le serveur
@@ -20,26 +21,7 @@ export default async function Accueil() {
         {/* Section Formulaire d'ajout */}
         <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
           <h2 className="text-xl font-semibold mb-4">Ajouter un Client</h2>
-          <form action={ajouterClient} className="flex flex-col gap-4">
-            <input 
-              type="text" name="nom" placeholder="Nom complet" required 
-              className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-            />
-            <input 
-              type="email" name="email" placeholder="Adresse email" required 
-              className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-            />
-            <input 
-              type="text" name="entreprise" placeholder="Entreprise (Optionnel)" 
-              className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-            />
-            <button 
-              type="submit" 
-              className="bg-blue-600 text-white font-medium p-2 rounded-lg hover:bg-blue-700 transition"
-            >
-              Enregistrer le client
-            </button>
-          </form>
+          <FormulaireClient />
         </section>
 
         {/* Section Liste des clients */}
